@@ -1,7 +1,7 @@
 package wtf.sable.mixin;
 
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.KeyboardHandler;
-import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,13 +15,15 @@ import net.minecraft.client.input.KeyEvent;
 public class KeyboardHandlerMixin {
     @Inject(method = "keyPress", at = @At("HEAD"), cancellable = true)
     private void onKeyPress(long handle, int action, KeyEvent event, CallbackInfo ci) {
-        if (event.key() == 66 && action == 1) {
-            FarmingMacro.MacroRunning = !FarmingMacro.MacroRunning;
+        if (event.key() == 66 && action == GLFW.GLFW_PRESS) {
+            FarmingMacro.ENABLED = !FarmingMacro.ENABLED;
 
-            FarmingMacro.LOGGER.info(FarmingMacro.MacroRunning ? "Macro started" : "Macro stopped");
+            KeyMapping.releaseAll();
+
+            FarmingMacro.LOGGER.info(FarmingMacro.ENABLED ? "Macro started" : "Macro stopped");
         }
 
-        if (FarmingMacro.MacroRunning && event.key() != 66) {
+        if (FarmingMacro.ENABLED && event.key() != 66) {
             ci.cancel();
         }
     }

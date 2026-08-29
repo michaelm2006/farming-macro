@@ -1,9 +1,7 @@
 package wtf.sable;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.resources.Identifier;
 
 import org.slf4j.Logger;
@@ -17,7 +15,7 @@ public class FarmingMacro implements ClientModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	public static boolean MacroRunning = false;
+	public static boolean ENABLED = false;
 
 	@Override
 	public void onInitializeClient() {
